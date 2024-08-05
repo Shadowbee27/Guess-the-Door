@@ -1,8 +1,16 @@
 use rand::Rng;
-use std::io;
-
+use std::fs::{read, File};
+use std::{fs, io};
 fn main() {
     start();
+}
+fn invalid_input(function: i8) {
+    println!("Invalid Input");
+    match function {
+        1 => menu(),
+        2 => store(),
+        _ => panic!("A fatal Error occurred"),
+    }
 }
 fn start() {
     println!("Hello what is your Name?");
@@ -15,17 +23,11 @@ fn menu() {
     println!("Start the Game:s Quit:q let somebody else play:e ");
     let mut doing = String::new();
     io::stdin().read_line(&mut doing);
-    let mut s = String::from("s");
-    let mut q = String::from("q");
-    let mut e = String::from("e");
-    io::stdin().read_line(&mut s).expect("error");
-    io::stdin().read_line(&mut q).expect("error");
-    io::stdin().read_line(&mut e).expect("error");
-    match doing {
-        q => std::process::exit(1),
-        e => start(),
-        s => game_loop(),
-        _ => quit(),
+    match doing.as_str() {
+        "q" => std::process::exit(1),
+        "e" => start(),
+        "s"=> game_loop(),
+        _ => invalid_input(1),
     }
 }
 fn game_loop() {
@@ -64,8 +66,13 @@ fn vergleich(guess: i8, secretnumber: i8) -> bool {
         false
     }
 }
+fn store() {
+    print!("Where do you want to store your score? Server: s/ lokal: l");
+    let storage = String::new();
+    match storage.as_str() {
+        "s" => println!("sorry but this is not avalibil"),
 
-fn quit() {
-    println!("error");
-    panic!()
+        "l" => println!("sorry but this is not avalibil"),
+        _ => invalid_input(2),
+    }
 }
