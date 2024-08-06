@@ -22,8 +22,11 @@ fn start() {
     println!("Hello what is your Name?");
     let mut name = String::new();
     io::stdin().read_line(&mut name).expect("error");
+    if name.is_empty() == true{
+        invalid_input(3)
+    }else {
     println!("Hello {}", name);
-    menu();
+    menu();}
 }
 fn menu() {
     println!("Start the Game:s Quit:q let somebody else play:e ");
