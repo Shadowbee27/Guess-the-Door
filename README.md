@@ -5,7 +5,7 @@ In the test build I always have the most up to date code that maybe not even wor
 # Why is the code bad 
 I am still learing Rust
 # Goals
-- Ui with (bevy)[https://bevyengine.org/]
+- Ui with [bevy](https://bevyengine.org/)
 - storing 
   - lokal
   - on an server
