@@ -10,5 +10,5 @@ I am still learing Rust
 # Goals
 - Ui with [bevy](https://bevyengine.org/)
 - storing
- - on a server
- - lokal
+  - on a server
+  - lokal
