@@ -1,17 +1,16 @@
+use bevy::app::{App, Startup};
 use rand::Rng;
-use std::fs::{read, File};
+use std::io;
 use std::process::exit;
-use std::{fs, io};
-
 fn main() {
-    start();
+    App::new().add_systems(Startup, start).run();
 }
 fn invalid_input(function: i8) {
     println!("Invalid Input");
     match function {
         1 => menu(),
         2 => store(),
-        3=> {
+        3 => {
             println!("Please input a valid name");
             start()
         }
@@ -22,11 +21,12 @@ fn start() {
     println!("Hello what is your Name?");
     let mut name = String::new();
     io::stdin().read_line(&mut name).expect("error");
-    if name.is_empty() == true{
+    if name.is_empty() == true {
         invalid_input(3)
-    }else {
-    println!("Hello {}", name);
-    menu();}
+    } else {
+        println!("Hello {}", name);
+        menu();
+    }
 }
 fn menu() {
     println!("Start the Game:s Quit:q let somebody else play:e ");
@@ -41,7 +41,7 @@ fn menu() {
 }
 fn game_loop() {
     let mut score: i8 = 0;
-    loop  {
+    loop {
         println!("Your score is: {}", score);
         println!("In front of you are three doors, one of them kills you.Which one do you choose? Enter a number between 1 and 3.");
         let secretnumber: i8 = rand::thread_rng().gen_range(1..=3);
@@ -53,12 +53,12 @@ fn game_loop() {
                 secretnumber
             );
             score = score + 1;
-        }else if score == 32{
+        } else if score == 32 {
             println!("You won");
-            break
+            break;
         } else {
             println!("You are death");
-            break
+            break;
         }
     }
     store();
