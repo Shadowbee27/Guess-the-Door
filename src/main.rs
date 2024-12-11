@@ -6,5 +6,5 @@ mod lib {
     pub mod input;
 }
 fn main() {
-    menu::start();
+    menu::start_menu();
 }

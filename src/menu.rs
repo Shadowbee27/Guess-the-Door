@@ -2,7 +2,7 @@ use crate::gamefiles::game::game_loop;
 use crate::lib;
 use std::process::exit;
 
-pub fn start() {
+pub fn start_menu() {
     println!("Hello what is your Name?");
     let name = lib::input::menu_input();
 
@@ -11,13 +11,11 @@ pub fn start() {
 }
 
 pub fn menu() {
-    println!(
-        "Choose a option: \n s => Start the Game \n q => Quit \n e => let somebody else play "
-    );
+    println!("Choose a option: \n s => Start the Game \n e => Change name \n q => Quit ");
     let doing = lib::input::menu_input();
     match doing.trim() {
         "q" => exit(0),
-        "e" => start(),
+        "e" => start_menu(),
         "s" => game_loop(),
         _ => {
             println!("invalid_input");
