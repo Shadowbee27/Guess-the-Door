@@ -41,7 +41,7 @@ jobs:
     # Artifact name
         #name: # optional, default is artifact
     # A file, directory or wildcard pattern that describes what to upload
-        path: ${{ github.repository }}
+        path: Shadowbee27/Guess-the-Door/target/release
     # The desired behavior if no files are found using the provided path.
 #      Available Options:
 #          warn: Output a warning but do not fail the action
