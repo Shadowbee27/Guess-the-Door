@@ -19,7 +19,7 @@ pub fn int_input() -> i64 {
                 if matches!(ok, 0..4) {
                     return ok;
                 } else {
-                    println!("Invalid input.");
+                    println!("Number out of range.");
                 }
             }
             Err(e) => println!("Error: ({}). Please try again", e),

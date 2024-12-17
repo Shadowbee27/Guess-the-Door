@@ -1,15 +1,14 @@
 use crate::lib::input;
-use crate::menu::menu;
+use crate::menu;
 use rand::Rng;
 pub fn game_loop() {
     let mut score: i8 = 0;
     loop {
         println!("Your score is: {}", score);
         println!("In front of you are three doors, one of them kills you. Which one do you choose? Enter a number between 1 and 3.");
-        let secretnumber: i64 = rand::rng().random_range(1..4);
-        println!("Your secret number is: {}", secretnumber);
+        let secret_number: i64 = rand::rng().random_range(1..4);
         let guess: i64 = input::int_input();
-        if secretnumber == guess {
+        if secret_number == guess {
             println!("You are died \nYour score was {}", score);
             break;
         } else if score > 32 {
@@ -17,8 +16,8 @@ pub fn game_loop() {
             break;
         } else {
             score += 1;
-            println!("The wrong door was {}", secretnumber);
+            println!("The wrong door was {}", secret_number);
         }
     }
-    menu()
+    menu::menu()
 }
