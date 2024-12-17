@@ -43,7 +43,7 @@ jobs:
 
     # A file, directory or wildcard pattern that describes what to upload
     # Required
-        path: Shadowbee27/Guess-the-Door/*
+        path: /home/runner/work/Guess-the-Door/Guess-the-Door
 
     # The desired behavior if no files are found using the provided path.
     # Available Options:
