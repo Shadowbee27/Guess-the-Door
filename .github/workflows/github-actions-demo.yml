@@ -2,16 +2,22 @@ name: Rust
 
 on:
   push:
-    branches: [ "guessing-game" ]
+    branches: 
+    - guessing-game
+    - guessing-game-dev
   pull_request:
-    branches: [ "guessing-game" ]
+    branches: 
+    - guessing-game
+    - guessing-game-dev
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
-
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
     - uses: actions/checkout@v4
