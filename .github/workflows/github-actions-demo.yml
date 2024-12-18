@@ -51,7 +51,7 @@ jobs:
     # Required
         path: |
           /home/runner/work/Guess-the-Door/Guess-the-Door/target/release/gessing_game
-          ||
+          |
           D:\a\Guess-the-Door\Guess-the-Door\target\release\gessing_game
 
     # The desired behavior if no files are found using the provided path.
