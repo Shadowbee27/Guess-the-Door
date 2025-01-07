@@ -1,7 +1,7 @@
 use crate::lib::input;
 use crate::menu;
 use rand::Rng;
-pub fn game_loop() {
+pub fn game_loop(name: String) {
     let mut score: i8 = 0;
     loop {
         println!("Your score is: {}", score);
@@ -19,5 +19,5 @@ pub fn game_loop() {
             println!("The wrong door was {}", secret_number);
         }
     }
-    menu::menu()
+    menu::menu(name)
 }
