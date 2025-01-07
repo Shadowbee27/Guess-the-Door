@@ -1,9 +1,14 @@
 [package]
 name = "gessing_game"
-version = "2.0.1" # 3.0.0 will have bevy or storing
+version = "2.0.2"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+opt-level = 3
 
 [dependencies]
 rand = "0.9.0-beta.1"
