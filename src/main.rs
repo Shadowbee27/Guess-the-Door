@@ -7,5 +7,8 @@ mod lib {
     pub mod input;
 }
 fn main() {
-    menu::start_menu();
+    let tmane = String::from("Test");
+    let tscore = 28;
+    gamefiles::store::store(tmane, tscore);
+    // menu::start_menu();
 }
