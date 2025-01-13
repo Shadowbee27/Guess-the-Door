@@ -1,5 +1,5 @@
+use crate::gamefiles::store;
 use crate::lib::input;
-use crate::menu;
 use rand::Rng;
 pub fn game_loop(name: String) {
     let mut score: i8 = 0;
@@ -19,5 +19,5 @@ pub fn game_loop(name: String) {
             println!("The wrong door was {}", secret_number);
         }
     }
-    menu::menu(name)
+    store::store(name, score);
 }

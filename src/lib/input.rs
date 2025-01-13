@@ -1,11 +1,25 @@
+use crate::menu::start_menu;
 use std::io;
 
-pub fn menu_input() -> String {
-    let mut input = String::new();
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read line");
-    input
+pub fn name_input() -> String {
+    loop {
+        let mut input = String::new();
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
+        input = input.trim().to_string();
+        for c in input.chars() {
+            if !c.is_alphabetic() {
+                println!("Invalid character found in your name");
+                start_menu()
+            } else if !c.is_numeric() {
+                println!("Invalid character found in your name");
+                start_menu()
+            } else {
+                return input;
+            }
+        }
+    }
 }
 pub fn int_input() -> i64 {
     loop {
