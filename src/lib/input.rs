@@ -2,7 +2,6 @@ use crate::menu::start_menu;
 use std::io;
 
 pub fn name_input() -> String {
-    loop {
         let mut input = String::new();
         io::stdin()
             .read_line(&mut input)
@@ -15,8 +14,7 @@ pub fn name_input() -> String {
                 start_menu()
             }
         }
-        return input;
-    }
+        input
 }
 pub fn int_input() -> i64 {
     loop {

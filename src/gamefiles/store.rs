@@ -11,7 +11,6 @@ pub fn store(name: String, score: i8) {
         match File::create(SCOREBOARD_PATH) {
             Ok(_) => {
                 println!("created scoreboard successfully");
-                ()
             }
             Err(e) => panic!("Error creating scoreboard. This is a state of no recovery, the program will crash. Exiting because: {}", e),
         }

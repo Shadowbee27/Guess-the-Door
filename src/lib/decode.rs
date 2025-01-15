@@ -11,7 +11,7 @@ pub fn decode() -> String {
     let mut scoreboard: Vec<u8> = read(SCOREBOARD_PATH).unwrap();
 
     scoreboard = BASE64_STANDARD.decode(scoreboard).unwrap();
-    let string_scoreboard: &str = match std::str::from_utf8(&scoreboard.as_slice()) {
+    let string_scoreboard: &str = match std::str::from_utf8(scoreboard.as_slice()) {
         Ok(v) => v,
         Err(e) => panic!("Invalid UTF-8 sequence: {}", e),
     };
