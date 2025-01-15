@@ -4,6 +4,8 @@ mod gamefiles {
     pub mod store;
 }
 mod lib {
+    pub mod check_for_scoreboard;
+    pub mod decode;
     pub mod input;
 }
 fn main() {

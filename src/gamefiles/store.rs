@@ -1,10 +1,12 @@
+use crate::lib::check_for_scoreboard;
 use crate::menu;
+use base64::prelude::*;
 use std::fs::*;
 use std::io::Write;
-use std::path::Path;
-const SCOREBOARD_PATH: &str = "src/gamefiles/scoreboard.txt";
+
+const SCOREBOARD_PATH: &str = "src/gamefiles/scoreboard.dat";
 pub fn store(name: String, score: i8) {
-    if !check_if_path_exist() {
+    if !check_for_scoreboard::check_if_path_exist() {
         println!("Scoreboard file not found, creating it now.");
         match File::create(SCOREBOARD_PATH) {
             Ok(_) => {
@@ -26,19 +28,13 @@ pub fn store(name: String, score: i8) {
         Err(e) => panic!("File error. {}", e),
     };
     let add_score: String = format!("{name} has score: {score}\n");
-    println!("Adding score: {}", add_score);
-    match file.write_all(add_score.as_bytes()).and_then(|()| {
-        println!("Added score");
-        menu::menu(name);
-        Ok(())
-    }) {
+    println!("Adding score...");
+    match file.write_all(BASE64_STANDARD.encode(add_score).as_bytes()) {
         Ok(f) => {
             println!("Added score");
             f
         }
         Err(e) => panic!("Error while adding score. Exiting because: {}", e),
     }
-}
-fn check_if_path_exist() -> bool {
-    Path::exists(SCOREBOARD_PATH.as_ref())
+    menu::menu(name)
 }

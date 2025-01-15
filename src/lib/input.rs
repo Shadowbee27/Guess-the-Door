@@ -9,16 +9,13 @@ pub fn name_input() -> String {
             .expect("Failed to read line");
         input = input.trim().to_string();
         for c in input.chars() {
-            if !c.is_alphabetic() {
-                println!("Invalid character found in your name");
-                start_menu()
-            } else if !c.is_numeric() {
-                println!("Invalid character found in your name");
-                start_menu()
+            if c.is_alphabetic() || c.is_numeric() {
             } else {
-                return input;
+                println!("Invalid character found in your name");
+                start_menu()
             }
         }
+        return input;
     }
 }
 pub fn int_input() -> i64 {
