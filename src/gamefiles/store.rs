@@ -1,4 +1,4 @@
-use crate::lib::check_for_scoreboard;
+use crate::lib::{check_for_scoreboard, decode};
 use crate::menu;
 use base64::prelude::*;
 use std::fs::*;
@@ -17,6 +17,7 @@ pub fn store(name: String, score: i8) {
     } else {
         println!("Found scoreboard");
     }
+    let exsisting_scoreboard = decode::decode();
     let mut file = match OpenOptions::new()
         .write(true)
         .create(true)
@@ -26,7 +27,7 @@ pub fn store(name: String, score: i8) {
         Ok(file) => file,
         Err(e) => panic!("File error. {}", e),
     };
-    let add_score: String = format!("{name} has score: {score}\n");
+    let add_score: String = format!("{exsisting_scoreboard} \n {name} has score: {score}\n");
     println!("Adding score...");
     match file.write_all(BASE64_STANDARD.encode(add_score).as_bytes()) {
         Ok(f) => {
