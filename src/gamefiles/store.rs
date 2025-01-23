@@ -17,7 +17,8 @@ pub fn store(name: String, score: i8) {
     } else {
         println!("Found scoreboard");
     }
-    let exsisting_scoreboard = decode::decode();
+    // remove_access_scores::remove_scores(name.clone(), score);
+    let existing_scoreboard = decode::decode();
     let mut file = match OpenOptions::new()
         .write(true)
         .create(true)
@@ -27,7 +28,7 @@ pub fn store(name: String, score: i8) {
         Ok(file) => file,
         Err(e) => panic!("File error. {}", e),
     };
-    let add_score: String = format!("{exsisting_scoreboard} \n {name} has score: {score}\n");
+    let add_score: String = format!("{existing_scoreboard} \n {name} has score: {score}\n");
     println!("Adding score...");
     match file.write_all(BASE64_STANDARD.encode(add_score).as_bytes()) {
         Ok(f) => {
