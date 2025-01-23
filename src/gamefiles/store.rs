@@ -1,4 +1,4 @@
-use crate::lib::{check_for_scoreboard, decode};
+use crate::lib::{check_for_scoreboard, decode, remove_access_scores};
 use crate::menu;
 use base64::prelude::*;
 use std::fs::*;
@@ -17,7 +17,7 @@ pub fn store(name: String, score: i8) {
     } else {
         println!("Found scoreboard");
     }
-    // remove_access_scores::remove_scores(name.clone(), score);
+    remove_access_scores::remove_scores(name.clone(), score);
     let existing_scoreboard = decode::decode();
     let mut file = match OpenOptions::new()
         .write(true)
