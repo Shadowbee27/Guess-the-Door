@@ -18,50 +18,38 @@ pub fn store(name: String, score: i8) {
         println!("Found scoreboard");
     }
     let existing_scoreboard = decode::decode();
-    let remove_score: (ScoreboardState, String) = remove_access_scores::remove_scores(name.clone());
+    let remove_score: (ScoreboardState, i8) = remove_access_scores::remove_scores(name.clone());
     println!("return is {}", remove_score.1);
     if remove_score.0 == ScoreboardState::NoAdding {
+        menu::menu(name)
     } else if remove_score.0 == ScoreboardState::ReplaceAdding {
-        let existing_scoreboard = existing_scoreboard.replace(&remove_score.1, "");
+        let new_scoreboard =
+            existing_scoreboard.replace(format!(" {name} has score: {score}\n").as_str(), "");
+        println!("{}", remove_score.1);
         println!("Replaced score");
-        let mut file = match OpenOptions::new()
-            .write(true)
-            .create(true)
-            .truncate(true)
-            .open(SCOREBOARD_PATH)
-        {
-            Ok(file) => file,
-            Err(e) => panic!("File error. {}", e),
-        };
-        let add_score: String = format!("{existing_scoreboard} \n {name} has score: {score}\n");
-        println!("Adding score...");
-        match file.write_all(BASE64_STANDARD.encode(add_score).as_bytes()) {
-            Ok(f) => {
-                println!("Added score");
-                f
-            }
-            Err(e) => panic!("Error while adding score. Exiting because: {}", e),
-        }
+        write_to_scoreboard(new_scoreboard, name, score)
     } else if remove_score.0 == ScoreboardState::JustAdding {
-        let existing_scoreboard = decode::decode();
-        let mut file = match OpenOptions::new()
-            .write(true)
-            .create(true)
-            .truncate(true)
-            .open(SCOREBOARD_PATH)
-        {
-            Ok(file) => file,
-            Err(e) => panic!("File error. {}", e),
-        };
-        let add_score: String = format!("{existing_scoreboard} \n {name} has score: {score}\n");
-        println!("Adding score...");
-        match file.write_all(BASE64_STANDARD.encode(add_score).as_bytes()) {
-            Ok(f) => {
-                println!("Added score");
-                f
-            }
-            Err(e) => panic!("Error while adding score. Exiting because: {}", e),
+        write_to_scoreboard(decode::decode(), name, score)
+    }
+}
+fn write_to_scoreboard(scoreboard: String, name: String, score: i8) {
+    let mut file = match OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .open(SCOREBOARD_PATH)
+    {
+        Ok(file) => file,
+        Err(e) => panic!("File error. {}", e),
+    };
+    let add_score: String = format!("{scoreboard} \n {name} has score: {score}\n");
+    println!("Adding score...");
+    match file.write_all(BASE64_STANDARD.encode(add_score).as_bytes()) {
+        Ok(f) => {
+            println!("Added score");
+            f
         }
+        Err(e) => panic!("Error while adding score. Exiting because: {}", e),
     }
     menu::menu(name)
 }
