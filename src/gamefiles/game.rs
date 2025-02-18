@@ -1,7 +1,7 @@
 use crate::gamefiles::store;
 use crate::lib::input;
-use rand::Rng;
 use crate::menu::menu;
+use rand::Rng;
 
 pub fn game_loop(name: String) {
     let mut score: i8 = 0;
@@ -23,6 +23,7 @@ pub fn game_loop(name: String) {
     }
     if score > 0 {
         store::store(name, score);
-    }else {
-    menu(name);
-}}
+    } else {
+        menu(name);
+    }
+}

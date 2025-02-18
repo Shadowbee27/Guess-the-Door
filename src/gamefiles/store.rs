@@ -1,9 +1,9 @@
-use crate::lib::{check_for_scoreboard, decode};
+use crate::lib::remove_access_scores::ScoreboardState;
+use crate::lib::{check_for_scoreboard, decode, remove_access_scores};
 use crate::menu;
 use base64::prelude::*;
 use std::fs::*;
 use std::io::Write;
-
 const SCOREBOARD_PATH: &str = "src/gamefiles/scoreboard.dat";
 pub fn store(name: String, score: i8) {
     if !check_for_scoreboard::check_if_path_exist() {
@@ -17,8 +17,21 @@ pub fn store(name: String, score: i8) {
     } else {
         println!("Found scoreboard");
     }
-    // remove_access_scores::remove_scores(name.clone(), score);
     let existing_scoreboard = decode::decode();
+    let remove_score: (ScoreboardState, i8) =
+        remove_access_scores::remove_scores(name.clone(), score);
+    if remove_score.0 == ScoreboardState::NoAdding {
+        menu::menu(name)
+    } else if remove_score.0 == ScoreboardState::ReplaceAdding {
+        let replacement_string: String = format!("\n {name} has score: {}", remove_score.1);
+        let new_scoreboard = existing_scoreboard.replace(replacement_string.as_str(), "");
+        println!("Replaced score");
+        write_to_scoreboard(new_scoreboard, name, score)
+    } else if remove_score.0 == ScoreboardState::JustAdding {
+        write_to_scoreboard(decode::decode(), name, score)
+    }
+}
+fn write_to_scoreboard(scoreboard: String, name: String, score: i8) {
     let mut file = match OpenOptions::new()
         .write(true)
         .create(true)
@@ -28,7 +41,7 @@ pub fn store(name: String, score: i8) {
         Ok(file) => file,
         Err(e) => panic!("File error. {}", e),
     };
-    let add_score: String = format!("{existing_scoreboard} \n {name} has score: {score}\n");
+    let add_score: String = format!("{scoreboard} \n {name} has score: {score}\n");
     println!("Adding score...");
     match file.write_all(BASE64_STANDARD.encode(add_score).as_bytes()) {
         Ok(f) => {
