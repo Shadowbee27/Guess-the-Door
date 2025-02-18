@@ -18,14 +18,13 @@ pub fn store(name: String, score: i8) {
         println!("Found scoreboard");
     }
     let existing_scoreboard = decode::decode();
-    let remove_score: (ScoreboardState, i8) = remove_access_scores::remove_scores(name.clone());
-    println!("return is {}", remove_score.1);
+    let remove_score: (ScoreboardState, i8) =
+        remove_access_scores::remove_scores(name.clone(), score);
     if remove_score.0 == ScoreboardState::NoAdding {
         menu::menu(name)
     } else if remove_score.0 == ScoreboardState::ReplaceAdding {
-        let new_scoreboard =
-            existing_scoreboard.replace(format!(" {name} has score: {score}\n").as_str(), "");
-        println!("{}", remove_score.1);
+        let replacement_string: String = format!("\n {name} has score: {}", remove_score.1);
+        let new_scoreboard = existing_scoreboard.replace(replacement_string.as_str(), "");
         println!("Replaced score");
         write_to_scoreboard(new_scoreboard, name, score)
     } else if remove_score.0 == ScoreboardState::JustAdding {

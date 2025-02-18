@@ -1,11 +1,12 @@
 use crate::lib::decode;
+use std::cmp::*;
 #[derive(PartialEq)]
 pub enum ScoreboardState {
     ReplaceAdding,
     NoAdding,
     JustAdding,
 }
-pub fn remove_scores(name: String) -> (ScoreboardState, i8) {
+pub fn remove_scores(name: String, current_score: i8) -> (ScoreboardState, i8) {
     let mut scores = Vec::new();
     let mut lines: Vec<String> = Vec::new();
     let scoreboard = decode::decode();
@@ -17,12 +18,11 @@ pub fn remove_scores(name: String) -> (ScoreboardState, i8) {
             lines.push(l.to_string());
         }
     }
-    println!("Here{:?}", lines);
     for s in lines.clone() {
         scores.push(s.replace(&string_remove, ""));
         counter += 1;
     }
-    if counter < 3 || counter == 0 {
+    if counter < 3 {
         println!("Less than 3 scores of {name} found.");
         (ScoreboardState::JustAdding, 0)
     } else {
@@ -33,8 +33,8 @@ pub fn remove_scores(name: String) -> (ScoreboardState, i8) {
             };
         }
         let smallest = number_scores.iter().min();
-        let option_score: Vec<i8> = Vec::new();
-        if smallest == option_score.iter().min() || smallest < option_score.iter().min() {
+        println!("smallest is {}", *smallest.unwrap());
+        if *smallest.unwrap() > current_score {
             (ScoreboardState::NoAdding, 0)
         } else {
             (ScoreboardState::ReplaceAdding, *smallest.unwrap())
