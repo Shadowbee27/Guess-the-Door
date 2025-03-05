@@ -30,27 +30,12 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: build_${{ matrix.os }}
-        path: /home/runner/work/Guess-the-Door/Guess-the-Door/target/release/gessing_game
+        path: |
+          /home/runner/work/Guess-the-Door/Guess-the-Door/target/release/gessing_game
+          D:\a\Guess-the-Door\Guess-the-Door\target\release\gessing_game.exe
+          /Users/runner/work/Guess-the-Door/Guess-the-Door/target/release/gessing_game
         if-no-files-found: warn
         retention-days: 90
         compression-level: 9
         overwrite: false
         include-hidden-files: false
-    - uses: actions/upload-artifact@v4
-      with:
-       name: build_${{ matrix.os }}
-       path: D:\a\Guess-the-Door\Guess-the-Door\target\release\gessing_game.exe
-       if-no-files-found: warn
-       retention-days: 90
-       compression-level: 9
-       overwrite: false
-       include-hidden-files: false
-    - uses: actions/upload-artifact@v4
-      with:
-       name: build_${{ matrix.os }}
-       path: /Users/runner/work/Guess-the-Door/Guess-the-Door/target/release/gessing_game
-       if-no-files-found: warn
-       retention-days: 90
-       compression-level: 9
-       overwrite: false
-       include-hidden-files: false
