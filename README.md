@@ -6,7 +6,6 @@ In the test build I always have the most up-to-date code that maybe not even wor
 
 # Goals
 1. [x] Make Code better
-2. [ ] storing
-3. [ ] on a server
-4. [ ] local
-5. [ ] Ui with [bevy](https://bevyengine.org/)
+2. [ ] on a server
+3. [x] local
+4. [ ] Ui with [bevy](https://bevyengine.org/)
