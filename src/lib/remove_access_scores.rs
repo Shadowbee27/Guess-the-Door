@@ -40,6 +40,13 @@ pub fn remove_scores(name: String, current_score: i8) -> (ScoreboardState, i8) {
                 }
             };
         }
+        debug!("Checking if score is already in scoreboard");
+        for n in number_scores.iter() {
+            if *n == current_score {
+                debug!("Found the number in scoreboard");
+                return (ScoreboardState::NoAdding, 0);
+            }
+        }
         debug!("Getting smallest number");
         let smallest = number_scores.iter().min();
         if *smallest.unwrap() > current_score {
