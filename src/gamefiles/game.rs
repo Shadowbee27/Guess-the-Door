@@ -1,7 +1,7 @@
-use log::debug;
 use crate::gamefiles::store;
 use crate::lib::input;
 use crate::menu::menu;
+use log::debug;
 use rand::Rng;
 
 pub fn game_loop(name: String) {

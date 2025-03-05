@@ -16,7 +16,7 @@ pub fn name_input() -> String {
             start_menu()
         }
     }
-    if input.is_empty(){
+    if input.is_empty() {
         error!("Your name has to contain Characters");
         start_menu()
     }
