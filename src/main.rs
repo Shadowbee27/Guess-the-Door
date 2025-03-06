@@ -1,3 +1,5 @@
+use log::debug;
+
 mod menu;
 mod gamefiles {
     pub mod game;
@@ -10,5 +12,7 @@ mod lib {
     pub mod remove_access_scores;
 }
 fn main() {
+    env_logger::init();
+    debug!("Entering Start menu ...");
     menu::start_menu();
 }
