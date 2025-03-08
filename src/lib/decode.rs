@@ -3,7 +3,7 @@ use base64::prelude::*;
 use log::{debug, error, info};
 use std::fs::*;
 
-const SCOREBOARD_PATH: &str = "src/gamefiles/scoreboard.dat";
+const SCOREBOARD_PATH: &str = "data/guessing_game/scores.dat";
 pub fn decode() -> String {
     debug!("Checking for Path of scoreboard");
     if !check_for_scoreboard::check_if_path_exist() {

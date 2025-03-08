@@ -5,9 +5,9 @@ use base64::prelude::*;
 use log::{debug, warn};
 use log::{error, info};
 use std::fs::*;
-use std::io::Write;
+use std::io::{ ErrorKind, Write};
 
-const SCOREBOARD_PATH: &str = "src/gamefiles/scoreboard.dat";
+const SCOREBOARD_PATH: &str = "data/guessing_game/scores.dat";
 pub fn store(name: String, score: i8) {
     debug!("Check for scoreboard");
     if !check_for_scoreboard::check_if_path_exist() {
@@ -16,11 +16,24 @@ pub fn store(name: String, score: i8) {
             Ok(_) => {
                 info!("created scoreboard successfully");
             }
-            Err(e) => {
-                error!("Error creating scoreboard. This is a state of no recovery, the program will crash. Exiting because: {}", e);
-                panic!()
-            }
+            Err(e) => match e.kind() {
+                ErrorKind::NotFound => create_dir("data/").unwrap_or_else(|e| match e.kind() {
+                    ErrorKind::AlreadyExists => create_dir("data/guessing_game/").unwrap_or_else(|e| {
+                        error!("Error creating scoreboard. This is a state of no recovery, the program will crash. Exiting because: {}", e);
+                        panic!()
+                    }),
+                    _ => {
+                        error!("Error creating scoreboard. This is a state of no recovery, the program will crash. Exiting because: {}", e);
+                        panic!()
+                    }
+                }),
+                _ => {
+                    error!("Error creating scoreboard. This is a state of no recovery, the program will crash. Exiting because: {}", e);
+                    panic!()
+                }
+            },
         }
+        store(name.clone(),score)
     } else {
         info!("Found scoreboard");
     }
@@ -36,7 +49,7 @@ pub fn store(name: String, score: i8) {
         info!("Replaced score");
         write_to_scoreboard(new_scoreboard, name, score)
     } else if remove_score.0 == ScoreboardState::JustAdding {
-        write_to_scoreboard(decode::decode(), name, score)
+        write_to_scoreboard(existing_scoreboard, name, score)
     }
 }
 fn write_to_scoreboard(scoreboard: String, name: String, score: i8) {
