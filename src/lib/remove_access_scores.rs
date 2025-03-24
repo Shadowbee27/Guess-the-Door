@@ -9,11 +9,11 @@ pub enum ScoreboardState {
     JustAdding,
 }
 pub fn remove_scores(name: String, current_score: i8) -> (ScoreboardState, i8) {
-    let mut scores = Vec::new();
-    let mut lines: Vec<String> = Vec::new();
-    let scoreboard = decode::decode();
-    let mut number_scores: Vec<i8> = Vec::new();
+    let mut scores: Vec<String>;
+    let mut lines: Vec<String>;
+    let mut number_scores: Vec<i8>;
     let string_remove = format!("{name} has score: ");
+    let scoreboard = decode::decode();
     let mut counter = 0;
     debug!("searching for lines with name");
     for l in scoreboard.lines() {
