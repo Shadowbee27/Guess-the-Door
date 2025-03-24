@@ -36,13 +36,12 @@ pub fn store(name: String, score: i8) {
                     }
                 },
             }
-            if check_for_scoreboard::check_if_path_exist(){
-                break
-            } else {
+            if check_for_scoreboard::check_if_path_exist() {
+                break;
             }
         } else {
             info!("Found scoreboard");
-            break
+            break;
         }
     }
     let existing_scoreboard = decode::decode();
