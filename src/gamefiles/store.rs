@@ -6,36 +6,44 @@ use log::{debug, warn};
 use log::{error, info};
 use std::fs::*;
 use std::io::{ErrorKind, Write};
+const PANIC_MESSAGE: &str = "Error creating scoreboard. This is a state of no recovery, the program will crash. Exiting because:";
 
 const SCOREBOARD_PATH: &str = "data/guessing_game/scores.dat";
 pub fn store(name: String, score: i8) {
     debug!("Check for scoreboard");
-    if !check_for_scoreboard::check_if_path_exist() {
-        warn!("Scoreboard file not found, creating it now.");
-        match File::create(SCOREBOARD_PATH) {
-            Ok(_) => {
-                info!("created scoreboard successfully");
-            }
-            Err(e) => match e.kind() {
-                ErrorKind::NotFound => create_dir("data/").unwrap_or_else(|e| match e.kind() {
-                    ErrorKind::AlreadyExists => create_dir("data/guessing_game/").unwrap_or_else(|e| {
-                        error!("Error creating scoreboard. This is a state of no recovery, the program will crash. Exiting because: {}", e);
-                        panic!()
+    loop {
+        if !check_for_scoreboard::check_if_path_exist() {
+            warn!("Scoreboard file not found, creating it now.");
+            match File::create(SCOREBOARD_PATH) {
+                Ok(_) => {
+                    info!("created scoreboard successfully");
+                }
+                Err(e) => match e.kind() {
+                    ErrorKind::NotFound => create_dir("data/").unwrap_or_else(|e| match e.kind() {
+                        ErrorKind::AlreadyExists => create_dir("data/guessing_game/")
+                            .unwrap_or_else(|e| {
+                                error!("{PANIC_MESSAGE} {}", e);
+                                panic!()
+                            }),
+                        _ => {
+                            error!("{PANIC_MESSAGE} {}", e);
+                            panic!()
+                        }
                     }),
                     _ => {
-                        error!("Error creating scoreboard. This is a state of no recovery, the program will crash. Exiting because: {}", e);
+                        error!("{PANIC_MESSAGE} {}", e);
                         panic!()
                     }
-                }),
-                _ => {
-                    error!("Error creating scoreboard. This is a state of no recovery, the program will crash. Exiting because: {}", e);
-                    panic!()
-                }
-            },
+                },
+            }
+            if check_for_scoreboard::check_if_path_exist(){
+                break
+            } else {
+            }
+        } else {
+            info!("Found scoreboard");
+            break
         }
-        store(name.clone(), score)
-    } else {
-        info!("Found scoreboard");
     }
     let existing_scoreboard = decode::decode();
     debug!("Calling remove access scores");
