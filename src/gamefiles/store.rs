@@ -5,7 +5,7 @@ use base64::prelude::*;
 use log::{debug, warn};
 use log::{error, info};
 use std::fs::*;
-use std::io::{ ErrorKind, Write};
+use std::io::{ErrorKind, Write};
 
 const SCOREBOARD_PATH: &str = "data/guessing_game/scores.dat";
 pub fn store(name: String, score: i8) {
@@ -33,7 +33,7 @@ pub fn store(name: String, score: i8) {
                 }
             },
         }
-        store(name.clone(),score)
+        store(name.clone(), score)
     } else {
         info!("Found scoreboard");
     }
