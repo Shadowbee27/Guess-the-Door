@@ -4,7 +4,7 @@ version = "3.0.2"
 edition = "2024"
 repository = "https://github.com/Shadowbee27/Guess-the-Door"
 license = "GPL-3"
-authors = ["Shadowbee27 <169397554+Shadowbee27@users.noreply.github.com>"]
+authors = ["Shadowbee27 <shadowbee.contact@proton.me>"]
 readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
