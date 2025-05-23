@@ -39,3 +39,5 @@ jobs:
         compression-level: 9
         overwrite: false
         include-hidden-files: false
+    - name: Testing
+      run: cargo test
